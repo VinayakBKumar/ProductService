@@ -45,7 +45,7 @@ public class FakeStoreProductService implements ProductService{
 
     public GenericProductDto getGenericProductDto(FakeStoreProductDto fakeStoreProductDto){
         GenericProductDto genericProductDto = new GenericProductDto();
-        genericProductDto.setId(fakeStoreProductDto.getId());
+        genericProductDto.setUuid(fakeStoreProductDto.getUuid());
         genericProductDto.setTitle(fakeStoreProductDto.getTitle());
         genericProductDto.setDescription(fakeStoreProductDto.getDescription());
         genericProductDto.setImage(fakeStoreProductDto.getImage());
