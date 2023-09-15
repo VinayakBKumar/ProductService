@@ -1,4 +1,4 @@
-package dev.vidhya.productservice.dtos;
+package dev.vidhya.productservice.thirdpartyclients.productservice.fakestore;
 
 import lombok.Getter;
 import lombok.Setter;
