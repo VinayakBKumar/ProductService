@@ -1,4 +1,4 @@
-package dev.vidhya.productservice.security;
+package dev.naman.productservice.security;
 
 import lombok.Getter;
 import lombok.Setter;

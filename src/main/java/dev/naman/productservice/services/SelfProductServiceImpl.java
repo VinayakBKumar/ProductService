@@ -7,6 +7,9 @@ import dev.naman.productservice.models.Category;
 import dev.naman.productservice.models.Price;
 import dev.naman.productservice.models.Product;
 import dev.naman.productservice.repositories.ProductRepository;
+import dev.naman.productservice.security.JWTResponse;
+import dev.naman.productservice.security.Role;
+import dev.naman.productservice.security.RoleType;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -18,13 +21,46 @@ import java.util.UUID;
 @Repository("selfProductServiceImpl")
 public class SelfProductServiceImpl implements ProductService {
 
+//    private JWTResponse jwtResponse;
+
     ProductRepository productRepository;
 
     public SelfProductServiceImpl(ProductRepository productRepository){
         this.productRepository = productRepository;
     }
+
+//    public void setJWTResponse(JWTResponse jwtResponse){
+//        this.jwtResponse = jwtResponse;
+//    }
+//
+//    public JWTResponse getJWTResponse(JWTResponse jwtResponse){
+//        return this.jwtResponse;
+//    }
+
+//    @Override
+//    public GenericProductDto getProductById(JWTResponse jwtResponse, UUID uuid) {
+//        Role role = new Role();
+//        role.setId(2l);
+//        role.setRole(RoleType.USER.name());
+//        if(!jwtResponse.getRoles().contains(role))
+//            throw new RuntimeException("Unauthorized Access");
+//
+//        Product product = productRepository.findById(uuid).get();
+//
+//        return ProductConvertor.getGenericProductDto(product);
+//    }
+//
+//    @Override
+//    public GenericProductDto getProductById(JWTResponse jwtResponse, Long id) throws NotFoundException {
+//        return null;
+//    }
+
     @Override
     public GenericProductDto getProductById(UUID uuid) {
+        Role role = new Role();
+        role.setId(2l);
+        role.setRole(RoleType.USER.name());
+
         Product product = productRepository.findById(uuid).get();
 
         return ProductConvertor.getGenericProductDto(product);

@@ -3,8 +3,12 @@ package dev.naman.productservice.controllers;
 import dev.naman.productservice.dtos.ExceptionDto;
 import dev.naman.productservice.dtos.GenericProductDto;
 import dev.naman.productservice.exceptions.NotFoundException;
+import dev.naman.productservice.security.JWTResponse;
+import dev.naman.productservice.security.TokenValidator;
+import dev.naman.productservice.security.ValidateSessionTokenDto;
 import dev.naman.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,7 @@ public class ProductController {
 //    @Autowired
     // field injection
     private ProductService productService;
+    private TokenValidator tokenValidator;
     // ....;
     // ...;
 
@@ -25,8 +30,9 @@ public class ProductController {
 
     // constructor injection
 //    @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, TokenValidator tokenValidator) {
         this.productService = productService;
+        this.tokenValidator = tokenValidator;
     }
 //
 
@@ -44,13 +50,35 @@ public class ProductController {
 
     // localhost:8080/products/{id}
     // localhost:8080/products/123
+//    @GetMapping("{id}")
+//    public GenericProductDto getProductById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authToken, @RequestHeader("userId") Long userId, @PathVariable("id") Long id) throws NotFoundException {
+//        JWTResponse jwtResponse = tokenValidator.ValidateToken(userId, authToken);
+//
+//        if(jwtResponse == null)
+//            throw new RuntimeException("Access Denied");
+//
+////        productService.setJWTResponse(jwtResponse);
+////        return productService.getProductById(jwtResponse, id);
+//        return productService.getProductById(jwtResponse, id);
+//    }
+//
+//    @GetMapping("/uuid/{uuid}")
+//    public GenericProductDto getProductByUUID(@RequestHeader(HttpHeaders.AUTHORIZATION) String authToken, @RequestHeader("userId") Long userId, @PathVariable("uuid")UUID uuid) throws NotFoundException{
+//        JWTResponse jwtResponse = tokenValidator.ValidateToken(userId, authToken);
+//
+//        if(jwtResponse == null)
+//            throw new RuntimeException("Access Denied");
+//
+//        return productService.getProductById(jwtResponse, uuid);
+//    }
+
     @GetMapping("{id}")
-    public GenericProductDto getProductById(@PathVariable("id") Long id) throws NotFoundException {
+    public GenericProductDto getProductById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authToken, @RequestHeader("userId") Long userId, @PathVariable("id") Long id) throws NotFoundException {
         return productService.getProductById(id);
     }
 
     @GetMapping("/uuid/{uuid}")
-    public GenericProductDto getProductByUUID(@PathVariable("uuid")UUID uuid) throws NotFoundException{
+    public GenericProductDto getProductByUUID(@RequestHeader(HttpHeaders.AUTHORIZATION) String authToken, @RequestHeader("userId") Long userId, @PathVariable("uuid")UUID uuid) throws NotFoundException{
         return productService.getProductById(uuid);
     }
 

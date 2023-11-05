@@ -2,8 +2,12 @@ package dev.naman.productservice.services;
 
 import dev.naman.productservice.dtos.GenericProductDto;
 import dev.naman.productservice.exceptions.NotFoundException;
+import dev.naman.productservice.security.JWTResponse;
+import dev.naman.productservice.security.RoleType;
 import dev.naman.productservice.thirdpartyclients.productsservice.fakestore.FakeStoreProductDto;
 import dev.naman.productservice.thirdpartyclients.productsservice.fakestore.FakeStoryProductServiceClient;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -17,6 +21,7 @@ import java.util.UUID;
 @Repository("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService {
 
+//    private JWTResponse jwtResponse;
     private FakeStoryProductServiceClient fakeStoryProductServiceClient;
 
     private GenericProductDto convertFakeStoreProductIntoGenericProduct(FakeStoreProductDto fakeStoreProductDto) {
@@ -32,6 +37,13 @@ public class FakeStoreProductService implements ProductService {
         return product;
     }
 
+//    public void setJWTResponse(JWTResponse jwtResponse){
+//        this.jwtResponse = jwtResponse;
+//    }
+//
+//    public JWTResponse getJWTResponse(JWTResponse jwtResponse){
+//        return this.jwtResponse;
+//    }
     public FakeStoreProductService(FakeStoryProductServiceClient fakeStoryProductServiceClient) {
         this.fakeStoryProductServiceClient = fakeStoryProductServiceClient;
     }
@@ -42,6 +54,18 @@ public class FakeStoreProductService implements ProductService {
         return convertFakeStoreProductIntoGenericProduct(fakeStoryProductServiceClient.createProduct(product));
     }
 
+//    @Override
+//    public GenericProductDto getProductById(JWTResponse jwtResponse, UUID uuid) throws NotFoundException {
+//        return null;
+//    }
+//
+//    @Override
+//    public GenericProductDto getProductById(JWTResponse jwtResponse, Long id) throws NotFoundException {
+//        if(!jwtResponse.getRoles().equals(RoleType.ADMIN))
+//            throw new RuntimeException("Unauthorized Access");
+//        return convertFakeStoreProductIntoGenericProduct(fakeStoryProductServiceClient.getProductById(id));
+//    }
+
     @Override
     public GenericProductDto getProductById(UUID uuid) throws NotFoundException {
         return null;
@@ -49,6 +73,8 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public GenericProductDto getProductById(Long id) throws NotFoundException {
+//        if(!jwtResponse.getRoles().equals(RoleType.ADMIN))
+//            throw new RuntimeException("Unauthorized Access");
         return convertFakeStoreProductIntoGenericProduct(fakeStoryProductServiceClient.getProductById(id));
     }
 
